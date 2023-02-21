@@ -2,14 +2,19 @@
 #include "main.h"
 
 /**
- * main - Entry point.
- * Description: write a program that prints "_putchar" followed by a new line.
- * Return: Always 0 (Success.)
+ * main - print _putchar
+ * The character to print
+ *
+ * Return: On success 1.
  */
+
 int main(void)
 {
-	printf("_putchar");
-	printf("\n");
-
-	return (0);
+char *word = "_putchar\n";
+while (*word)
+{
+_putchar(*word);
+word++;
+}
+return (0);
 }
