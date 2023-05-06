@@ -1,17 +1,17 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdint.h>
 
-/**
- * check_endianness - check endianness of the machine
- *
- * Return: 1 if little-endian, 0 if big-endian
- */
-int check_endianness(void)
-{
-    int value = 1;
-    char *ptr = (char *)&value;
+int main() {
+    uint16_t value = 0x0102;
+    uint8_t *ptr = (uint8_t *)&value;
 
-    if (*ptr == 1) {
-        return 1;
+    if (*ptr == 0x02 && *(ptr + 1) == 0x01) {
+        printf("Little endian.\n");
+    } else if (*ptr == 0x01 && *(ptr + 1) == 0x02) {
+        printf("Big endian.\n");
+    } else {
+        printf("Unknown endianness.\n");
     }
+
     return 0;
 }
