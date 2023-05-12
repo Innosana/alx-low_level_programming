@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * read_file - Reads a text file and prints it to POSIX stdout.
  * @file_name: A pointer to the name of the file.
