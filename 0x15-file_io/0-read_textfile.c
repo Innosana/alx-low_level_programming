@@ -1,38 +1,36 @@
 #include "main.h"
 
 /**
- * read_file - Reads a text file and prints it to POSIX stdout.
- * @file_name: A pointer to the name of the file.
- * @num_letters: The number of letters the
- *               function should read and print.
+ * read_and_print_text - reads a text file and prints the characters
+ * @filename: filename.
+ * @max_chars: maximum number of characters to print.
  *
- * Return: If the function fails or file_name is NULL - 0.
- *         O/w - the actual number of bytes the function can read and print.
+ * Return: number of characters printed. If it fails, returns 0.
  */
-ssize_t read_file(const char *file_name, size_t num_letters)
+ssize_t read_and_print_text(const char *filename, size_t max_chars)
 {
-    ssize_t file_descriptor, num_bytes_read, num_bytes_written;
-    char *file_content;
+	int file_descriptor;
+	ssize_t num_chars_read, num_chars_written;
+	char *buffer;
 
-    if (file_name == NULL)
-        return (0);
+	if (!filename)
+		return (0);
 
-    file_content = malloc(sizeof(char) * num_letters);
-    if (file_content == NULL)
-        return (0);
+	file_descriptor = open(filename, O_RDONLY);
 
-    file_descriptor = open(file_name, O_RDONLY);
-    num_bytes_read = read(file_descriptor, file_content, num_letters);
-    num_bytes_written = write(STDOUT_FILENO, file_content, num_bytes_read);
+	if (file_descriptor == -1)
+		return (0);
 
-    if (file_descriptor == -1 || num_bytes_read == -1 || num_bytes_written == -1 || num_bytes_written != num_bytes_read)
-    {
-        free(file_content);
-        return (0);
-    }
+	buffer = malloc(sizeof(char) * max_chars);
+	if (!buffer)
+		return (0);
 
-    free(file_content);
-    close(file_descriptor);
+	num_chars_read = read(file_descriptor, buffer, max_chars);
+	num_chars_written = write(STDOUT_FILENO, buffer, num_chars_read);
 
-    return (num_bytes_written);
+	close(file_descriptor);
+
+	free(buffer);
+
+	return (num_chars_written);
 }
